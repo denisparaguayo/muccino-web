@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Pedidos from '../components/Pedidos.astro';
+import Footer from '../components/Footer.astro';
+import WhatsappFloat from '../components/WhatsappFloat.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+	title={`Pedidos | ${site.brand}`}
+	description={`Hace tu pedido de aceite de soja ${site.brand} y coordinamos por WhatsApp.`}>
+	<Header />
+	<main>
+		<Pedidos />
+	</main>
+	<Footer />
+	<WhatsappFloat />
+</BaseLayout>
+

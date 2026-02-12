@@ -1,0 +1,262 @@
+---
+import { site } from '../data/site';
+import { presentaciones } from '../data/presentaciones';
+
+const waBaseLink = `https://wa.me/${site.phoneWa}`;
+---
+
+<section id="pedidos" class="mx-auto max-w-6xl px-4 py-14">
+	<div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6">
+		<div class="flex flex-col gap-2">
+			<h1 class="text-2xl font-semibold">Pedidos</h1>
+			<p class="text-zinc-400 text-sm">
+				Completa el formulario y te armamos el mensaje para enviar por WhatsApp.
+			</p>
+		</div>
+
+		<form
+			id="pedidos-form"
+			class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6"
+			data-phone-wa={site.phoneWa}>
+			<div class="flex flex-col gap-4">
+				<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+					<div class="flex flex-col gap-2">
+						<label class="text-sm text-zinc-300" for="pedido-nombre">
+							Nombre
+						</label>
+						<input
+							id="pedido-nombre"
+							name="nombre"
+							required
+							autocomplete="name"
+							placeholder="Tu nombre"
+							class="w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-600/60"
+						/>
+					</div>
+
+					<div class="flex flex-col gap-2">
+						<label class="text-sm text-zinc-300" for="pedido-telefono">
+							Telefono
+						</label>
+						<input
+							id="pedido-telefono"
+							name="telefono"
+							required
+							autocomplete="tel"
+							inputmode="tel"
+							placeholder="Ej: +595..."
+							class="w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-600/60"
+						/>
+					</div>
+				</div>
+
+				<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+					<div class="flex flex-col gap-2">
+						<label class="text-sm text-zinc-300" for="pedido-tipo">
+							Tipo de cliente
+						</label>
+						<select
+							id="pedido-tipo"
+							name="tipo"
+							class="w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-600/60">
+							<option value="Minorista">Minorista</option>
+							<option value="Mayorista">Mayorista</option>
+						</select>
+					</div>
+
+					<div class="flex flex-col gap-2">
+						<label class="text-sm text-zinc-300" for="pedido-entrega">
+							Entrega o retiro
+						</label>
+						<select
+							id="pedido-entrega"
+							name="entrega"
+							class="w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-600/60">
+							<option value="A coordinar">A coordinar</option>
+							<option value="Entrega">Entrega</option>
+							<option value="Retiro">Retiro</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="flex flex-col gap-2">
+					<label class="text-sm text-zinc-300" for="pedido-direccion">
+						Direccion (opcional)
+					</label>
+					<input
+						id="pedido-direccion"
+						name="direccion"
+						autocomplete="street-address"
+						placeholder="Barrio / ciudad / referencias"
+						class="w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-600/60"
+					/>
+				</div>
+
+				<div class="flex flex-col gap-2">
+					<label class="text-sm text-zinc-300" for="pedido-notas">
+						Notas (opcional)
+					</label>
+					<textarea
+						id="pedido-notas"
+						name="notas"
+						rows="4"
+						placeholder="Algo a tener en cuenta (horario, zona, etc.)"
+						class="w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-600/60"
+					></textarea>
+				</div>
+			</div>
+
+			<div class="flex flex-col gap-4">
+				<div class="flex items-center justify-between gap-3">
+					<h2 class="font-semibold">Items</h2>
+					<button
+						id="pedido-add-item"
+						type="button"
+						class="rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-2 text-sm text-zinc-200 hover:bg-zinc-900/60">
+						Agregar item
+					</button>
+				</div>
+
+				<div id="pedido-items" class="flex flex-col gap-3"></div>
+
+				<div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+					<button
+						type="submit"
+						class="rounded-xl bg-emerald-600 px-5 py-3 font-semibold hover:bg-emerald-500 w-fit">
+						Enviar pedido por WhatsApp
+					</button>
+
+					<a
+						href={waBaseLink}
+						target="_blank"
+						rel="noopener"
+						class="text-sm text-zinc-400 hover:text-zinc-200 w-fit">
+						Ir a WhatsApp sin mensaje
+					</a>
+				</div>
+
+				<p class="text-xs text-zinc-500">
+					WhatsApp: <span class="text-zinc-200 font-semibold">{site.phoneDisplay}</span>
+				</p>
+			</div>
+		</form>
+	</div>
+
+	<template id="pedido-item-template">
+		<div class="grid grid-cols-1 sm:grid-cols-[1fr_8rem_auto] gap-3 items-start">
+			<div class="flex flex-col gap-2">
+				<label class="text-sm text-zinc-300">Presentacion</label>
+				<select
+					required
+					class="pedido-item-select w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-600/60">
+					<option value="" selected>Elegir...</option>
+					{
+						presentaciones.map((p) => (
+							<option value={p.size}>{p.size} - {p.use}</option>
+						))
+					}
+				</select>
+			</div>
+
+			<div class="flex flex-col gap-2">
+				<label class="text-sm text-zinc-300">Cantidad</label>
+				<input
+					type="number"
+					required
+					min="1"
+					step="1"
+					value="1"
+					class="pedido-item-qty w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-600/60"
+				/>
+			</div>
+
+			<button
+				type="button"
+				class="pedido-item-remove mt-7 rounded-xl border border-zinc-800 bg-zinc-950/60 px-3 py-3 text-sm text-zinc-200 hover:bg-zinc-900/60"
+				aria-label="Quitar item">
+				Quitar
+			</button>
+		</div>
+	</template>
+
+	<script is:inline>
+		(() => {
+			const form = document.getElementById('pedidos-form');
+			const itemsRoot = document.getElementById('pedido-items');
+			const addButton = document.getElementById('pedido-add-item');
+			const template = document.getElementById('pedido-item-template');
+
+			if (!form || !itemsRoot || !addButton || !(template instanceof HTMLTemplateElement)) {
+				return;
+			}
+
+			const addItem = () => {
+				const fragment = template.content.cloneNode(true);
+				const container = fragment.firstElementChild;
+				if (!container) return;
+
+				const removeButton = container.querySelector('.pedido-item-remove');
+				if (removeButton) {
+					removeButton.addEventListener('click', () => {
+						container.remove();
+					});
+				}
+
+				itemsRoot.appendChild(container);
+			};
+
+			addButton.addEventListener('click', addItem);
+			addItem();
+
+			form.addEventListener('submit', (e) => {
+				e.preventDefault();
+
+				if (!form.reportValidity()) return;
+
+				const phoneWa = form.dataset.phoneWa;
+				if (!phoneWa) return;
+
+				const nombre = (document.getElementById('pedido-nombre')?.value || '').trim();
+				const telefono = (document.getElementById('pedido-telefono')?.value || '').trim();
+				const tipo = (document.getElementById('pedido-tipo')?.value || '').trim();
+				const entrega = (document.getElementById('pedido-entrega')?.value || '').trim();
+				const direccion = (document.getElementById('pedido-direccion')?.value || '').trim();
+				const notas = (document.getElementById('pedido-notas')?.value || '').trim();
+
+				const itemEls = Array.from(itemsRoot.querySelectorAll(':scope > div'));
+				const items = itemEls
+					.map((el) => {
+						const size = el.querySelector('.pedido-item-select')?.value?.trim() || '';
+						const qtyRaw = el.querySelector('.pedido-item-qty')?.value || '1';
+						const qty = Math.max(1, Number.parseInt(qtyRaw, 10) || 1);
+						return size ? { size, qty } : null;
+					})
+					.filter(Boolean);
+
+				if (!nombre || !telefono || items.length === 0) return;
+
+				const lines = [];
+				lines.push('Hola, quiero hacer un pedido.');
+				lines.push('');
+				lines.push(`Nombre: ${nombre}`);
+				lines.push(`Telefono: ${telefono}`);
+				if (tipo) lines.push(`Tipo: ${tipo}`);
+				if (entrega) lines.push(`Entrega/retiro: ${entrega}`);
+				if (direccion) lines.push(`Direccion: ${direccion}`);
+				lines.push('');
+				lines.push('Items:');
+				for (const item of items) {
+					lines.push(`- ${item.qty} x ${item.size}`);
+				}
+				if (notas) {
+					lines.push('');
+					lines.push('Notas:');
+					lines.push(notas);
+				}
+
+				const waUrl = `https://wa.me/${phoneWa}?text=${encodeURIComponent(lines.join('\n'))}`;
+				window.open(waUrl, '_blank', 'noopener');
+			});
+		})();
+	</script>
+</section>
