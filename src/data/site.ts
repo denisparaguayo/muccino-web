@@ -3,7 +3,7 @@ export const site = {
 	brand: 'Productos de la familia Muccino',
 	tagline:
 		'Somos una empresa paraguaya dedicada al fraccionamiento de aceite de soja comestible.',
-	trustLine: 'Fraccionamiento controlado Â· Paraguay',
+	trustLine: 'Fraccionamiento controlado · Paraguay',
 	phoneDisplay: '+595 982 649300',
 	phoneWa: '595982649300',
 
