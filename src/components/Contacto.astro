@@ -1,24 +1,68 @@
 ---
 import { site } from '../data/site';
-const waLink = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(site.waDefaultMessage)}`;
+
+const waFallbackLink = `https://wa.me/${site.phoneWa}`;
 ---
 
 <section id="contacto" class="mx-auto max-w-6xl px-4 py-14">
 	<div
-		class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-		<div>
+		class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+		<div class="md:max-w-sm">
 			<h2 class="text-2xl font-semibold">Contacto</h2>
 			<p class="text-zinc-400 mt-1">
 				Consultá por disponibilidad, tamaños y pedidos.
 			</p>
 			<div class="mt-3 text-lg font-semibold">{site.phoneDisplay}</div>
 		</div>
-		<a
-			href={waLink}
-			target="_blank"
-			rel="noopener"
-			class="rounded-xl bg-emerald-600 px-5 py-3 font-semibold hover:bg-emerald-500 w-fit">
-			Hablar por WhatsApp
-		</a>
+
+		<form
+			id="contacto-form"
+			class="w-full md:w-[28rem] flex flex-col gap-3"
+			data-phone-wa={site.phoneWa}>
+			<label class="text-sm text-zinc-300" for="contacto-mensaje">
+				Tu mensaje
+			</label>
+			<textarea
+				id="contacto-mensaje"
+				name="mensaje"
+				required
+				rows="4"
+				placeholder="Escribí tu consulta acá…"
+				class="w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-600/60"
+			></textarea>
+
+			<div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+				<button
+					type="submit"
+					class="rounded-xl bg-emerald-600 px-5 py-3 font-semibold hover:bg-emerald-500 w-fit">
+					Enviar por WhatsApp
+				</button>
+				<a
+					href={waFallbackLink}
+					target="_blank"
+					rel="noopener"
+					class="text-sm text-zinc-400 hover:text-zinc-200 w-fit">
+					Ir a WhatsApp sin mensaje
+				</a>
+			</div>
+		</form>
 	</div>
+
+	<script is:inline>
+		(() => {
+			const form = document.getElementById('contacto-form');
+			const textarea = document.getElementById('contacto-mensaje');
+			if (!form || !textarea) return;
+
+			form.addEventListener('submit', (e) => {
+				e.preventDefault();
+				const phoneWa = form.dataset.phoneWa;
+				const userMessage = textarea.value.trim();
+				if (!phoneWa || !userMessage) return;
+
+				const waUrl = `https://wa.me/${phoneWa}?text=${encodeURIComponent(userMessage)}`;
+				window.open(waUrl, '_blank', 'noopener');
+			});
+		})();
+	</script>
 </section>

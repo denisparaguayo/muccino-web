@@ -1,6 +1,7 @@
 ---
 import { site } from '../data/site';
 import logoM from '../assets/img/logo-m.jpg';
+
 const waLink = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(site.waDefaultMessage)}`;
 ---
 
@@ -19,31 +20,121 @@ const waLink = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(site.waD
 
 		<nav class="hidden md:flex items-center gap-6 text-sm text-zinc-300">
 			<a class="hover:text-white" href="/presentaciones">Presentaciones</a>
-			<a class="hover:text-white" href="#calidad">Calidad</a>
+			<a class="hover:text-white" href="/#calidad">Calidad</a>
 			<a class="hover:text-white" href="/nosotros">Nosotros</a>
-			<a class="hover:text-white" href="#contacto">Contacto</a>
+			<a class="hover:text-white" href="/contacto">Contacto</a>
 		</nav>
 
-		<a
-			href={waLink}
-			target="_blank"
-			rel="noopener"
-			class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-3 py-2 text-sm font-semibold hover:bg-emerald-500">
-			<!-- Ícono (siempre visible) -->
-			<svg
-				class="h-5 w-5"
-				viewBox="0 0 24 24"
-				fill="currentColor"
-				aria-hidden="true">
-				<path
-					d="M20.52 3.48A11.94 11.94 0 0 0 12.07 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.15 1.6 5.97L0 24l6.28-1.64a11.86 11.86 0 0 0 5.79 1.48h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.46-8.46z"
-				></path>
-			</svg>
+		<div class="flex items-center gap-2">
+			<button
+				id="mobile-menu-button"
+				type="button"
+				class="md:hidden inline-flex items-center justify-center rounded-xl border border-zinc-800 bg-zinc-950/60 px-3 py-2 text-zinc-200 hover:bg-zinc-900/60"
+				aria-controls="mobile-menu"
+				aria-expanded="false"
+				aria-label="Abrir menu">
+				<svg
+					class="h-5 w-5"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true">
+					<path d="M4 6h16" />
+					<path d="M4 12h16" />
+					<path d="M4 18h16" />
+				</svg>
+			</button>
 
-			<!-- Texto SOLO desktop -->
-			<span class="hidden sm:inline">
-				{site.phoneDisplay}
-			</span>
-		</a>
+			<a
+				href={waLink}
+				target="_blank"
+				rel="noopener"
+				class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-3 py-2 text-sm font-semibold hover:bg-emerald-500">
+				<!-- Icono (siempre visible) -->
+				<svg
+					class="h-5 w-5"
+					viewBox="0 0 24 24"
+					fill="currentColor"
+					aria-hidden="true">
+					<path
+						d="M20.52 3.48A11.94 11.94 0 0 0 12.07 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.15 1.6 5.97L0 24l6.28-1.64a11.86 11.86 0 0 0 5.79 1.48h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.46-8.46z"
+					></path>
+				</svg>
+
+				<!-- Texto SOLO desktop -->
+				<span class="hidden sm:inline">
+					{site.phoneDisplay}
+				</span>
+			</a>
+		</div>
 	</div>
+
+	<div class="mx-auto max-w-6xl px-4 pb-3 md:hidden">
+		<nav
+			id="mobile-menu"
+			class="hidden rounded-xl border border-zinc-800 bg-zinc-950/60 p-3 text-sm text-zinc-200">
+			<a class="block rounded-lg px-3 py-2 hover:bg-zinc-900/60" href="/presentaciones">Presentaciones</a>
+			<a class="block rounded-lg px-3 py-2 hover:bg-zinc-900/60" href="/#calidad">Calidad</a>
+			<a class="block rounded-lg px-3 py-2 hover:bg-zinc-900/60" href="/nosotros">Nosotros</a>
+			<a class="block rounded-lg px-3 py-2 hover:bg-zinc-900/60" href="/contacto">Contacto</a>
+		</nav>
+	</div>
+
+	<script is:inline>
+		(() => {
+			const button = document.getElementById('mobile-menu-button');
+			const menu = document.getElementById('mobile-menu');
+			if (!button || !menu) return;
+
+			const closeMenu = () => {
+				menu.classList.add('hidden');
+				button.setAttribute('aria-expanded', 'false');
+				button.setAttribute('aria-label', 'Abrir menu');
+			};
+
+			const openMenu = () => {
+				menu.classList.remove('hidden');
+				button.setAttribute('aria-expanded', 'true');
+				button.setAttribute('aria-label', 'Cerrar menu');
+			};
+
+			button.addEventListener('click', () => {
+				const isOpen = button.getAttribute('aria-expanded') === 'true';
+				if (isOpen) closeMenu();
+				else openMenu();
+			});
+
+			menu.addEventListener('click', (e) => {
+				const target = e.target;
+				if (target instanceof HTMLAnchorElement) closeMenu();
+			});
+
+			document.addEventListener('click', (e) => {
+				const target = e.target;
+				if (!(target instanceof Node)) return;
+				const isOpen = button.getAttribute('aria-expanded') === 'true';
+				if (!isOpen) return;
+				if (menu.contains(target) || button.contains(target)) return;
+				closeMenu();
+			});
+
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape') closeMenu();
+			});
+
+			const mq = window.matchMedia('(min-width: 768px)');
+			if (mq.addEventListener) {
+				mq.addEventListener('change', (e) => {
+					if (e.matches) closeMenu();
+				});
+			} else if (mq.addListener) {
+				mq.addListener((e) => {
+					if (e.matches) closeMenu();
+				});
+			}
+		})();
+	</script>
 </header>
