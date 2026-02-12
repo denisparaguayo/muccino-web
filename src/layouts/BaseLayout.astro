@@ -2,15 +2,14 @@
 import '../styles/global.css';
 import { site } from '../data/site';
 import logoM from '../assets/img/logo-m.jpg';
-import heroProductos from '../assets/img/hero-productos.jpg';
 
 const {
 	title = site.brand,
 	description = site.tagline,
-	image = heroProductos.src,
+	image = '/hero-productos.jpg',
 } = Astro.props;
 
-const resolvedImage = image || heroProductos.src;
+const resolvedImage = image || '/hero-productos.jpg';
 const baseUrl = Astro.site ?? new URL(site.url);
 const imageUrl = new URL(resolvedImage, baseUrl).toString();
 const canonicalUrl = new URL(Astro.url.pathname, baseUrl).toString();
