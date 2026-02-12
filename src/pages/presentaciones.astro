@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Presentaciones from '../components/Presentaciones.astro';
+import Footer from '../components/Footer.astro';
+import WhatsappFloat from '../components/WhatsappFloat.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+	title={`Presentaciones | ${site.brand}`}
+	description={`Conocé todas las presentaciones de aceite de soja ${site.brand}. Formatos para hogar, familia y gastronomía.`}>
+	<Header />
+	<main>
+		<Presentaciones />
+	</main>
+	<Footer />
+	<WhatsappFloat />
+</BaseLayout>
