@@ -2,12 +2,18 @@
 import '../styles/global.css';
 import { site } from '../data/site';
 import logoM from '../assets/img/logo-m.jpg';
+import heroProductos from '../assets/img/hero-productos.jpg';
 
 const {
 	title = site.brand,
 	description = site.tagline,
-	image = logoM.src,
+	image = heroProductos.src,
 } = Astro.props;
+
+const resolvedImage = image || heroProductos.src;
+const baseUrl = Astro.site ?? new URL(site.url);
+const imageUrl = new URL(resolvedImage, baseUrl).toString();
+const canonicalUrl = new URL(Astro.url.pathname, baseUrl).toString();
 ---
 
 <!doctype html>
@@ -23,17 +29,20 @@ const {
 
 		<link rel="icon" type="image/jpeg" href={logoM.src} />
 		<link rel="apple-touch-icon" href={logoM.src} />
+		<link rel="canonical" href={canonicalUrl} />
 
 		<meta property="og:site_name" content={site.brand} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
-		<meta property="og:image" content={image} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={imageUrl} />
+		<meta property="og:image:alt" content={title} />
 
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={image} />
+		<meta name="twitter:image" content={imageUrl} />
 	</head>
 	<body class="bg-zinc-950 text-zinc-100 antialiased">
 		<slot />
