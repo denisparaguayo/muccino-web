@@ -1,0 +1,18 @@
+---
+import { site } from '../data/site';
+---
+
+<section id="nosotros" class="mx-auto max-w-6xl px-4 py-14">
+	<h2 class="text-2xl font-semibold">Nosotros</h2>
+	<p class="text-zinc-300 mt-3 max-w-3xl">
+		En Muccino nos enfocamos en el fraccionamiento de aceite comestible,
+		cuidando la presentación y la atención para que puedas comprar con
+		confianza.
+	</p>
+
+	{
+		site.since && (
+			<div class="mt-4 text-sm text-zinc-400">Desde {site.since}</div>
+		)
+	}
+</section>

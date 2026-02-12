@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsappFloat from '../components/WhatsappFloat.astro';
+import NosotrosPage from '../components/NosotrosPage.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+	title={`Nosotros | ${site.brand}`}
+	description={`Conocé ${site.brand}. ${site.trustLine}. Desde ${site.since}.`}>
+	<Header />
+	<main>
+		<NosotrosPage />
+	</main>
+	<Footer />
+	<WhatsappFloat />
+</BaseLayout>

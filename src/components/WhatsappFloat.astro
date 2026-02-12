@@ -1,0 +1,17 @@
+---
+import { site } from '../data/site';
+import logoM from '../assets/img/logo-m.jpg';
+const waLink = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(site.waDefaultMessage)}`;
+---
+
+<a
+	href={waLink}
+	target="_blank"
+	rel="noopener"
+	class="fixed bottom-4 right-4 z-50 flex items-center gap-3 rounded-2xl bg-zinc-900/90 border border-zinc-800 px-3 py-2 shadow-lg hover:bg-zinc-900">
+	<img src={logoM.src} alt="M" class="h-9 w-9 rounded-xl" />
+	<div class="hidden sm:block">
+		<div class="text-xs text-zinc-400">Consultas</div>
+		<div class="text-sm font-semibold">WhatsApp</div>
+	</div>
+</a>

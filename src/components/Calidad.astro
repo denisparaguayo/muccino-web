@@ -1,0 +1,30 @@
+<section id="calidad" class="mx-auto max-w-6xl px-4 py-14">
+	<h2 class="text-2xl font-semibold">Calidad y fraccionamiento</h2>
+	<p class="text-zinc-400 mt-1">
+		Procesos pensados para consistencia, higiene y confianza.
+	</p>
+
+	<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+		{
+			[
+				[
+					'Fraccionamiento controlado',
+					'Cuidamos cada etapa para mantener un producto uniforme.',
+				],
+				[
+					'Envases seguros',
+					'Sellado confiable para conservar calidad y facilitar el manejo.',
+				],
+				[
+					'Atención directa',
+					'Consultas rápidas para pedidos minoristas y mayoristas.',
+				],
+			].map(([t, d]) => (
+				<div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
+					<div class="font-semibold">{t}</div>
+					<div class="text-sm text-zinc-400 mt-2">{d}</div>
+				</div>
+			))
+		}
+	</div>
+</section>

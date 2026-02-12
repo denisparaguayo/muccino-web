@@ -1,0 +1,270 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../data/site';
+import { presentaciones } from '../../data/presentaciones';
+import logoM from '../../assets/img/logo-m.jpg';
+
+type ImgLike = string | { src: string };
+const bottleImages = import.meta.glob(
+	'/src/assets/img/botellas/*.{jpg,jpeg,png,webp}',
+	{ eager: true, import: 'default' }
+) as Record<string, ImgLike>;
+
+const toSrc = (img: ImgLike | undefined) =>
+	typeof img === 'string' ? img : img?.src;
+
+export async function getStaticPaths() {
+	return presentaciones.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const producto = presentaciones.find((p) => p.slug === slug);
+
+if (!producto) {
+	throw new Error(`Producto no encontrado: ${slug}`);
+}
+
+const bottleKey = producto.image
+	? `/src/assets/img/botellas/${producto.image}`
+	: null;
+const bottleSrc = bottleKey
+	? (toSrc(bottleImages[bottleKey]) ?? logoM.src)
+	: logoM.src;
+
+const waMinorista = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(
+	`Hola, quiero consultar por el ${producto.title}. ¿Precio y disponibilidad?`
+)}`;
+
+const waMayorista = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(
+	`Hola, quiero pedir el catálogo mayorista Muccino. Me interesa: ${producto.size}. ¿Precios por volumen y disponibilidad?`
+)}`;
+
+const pageTitle = `${producto.title} | ${site.brand}`;
+const pageDesc = `${producto.description} Presentación: ${producto.size}. ${site.trustLine}.`;
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+	<div class="mx-auto max-w-6xl px-4 py-8">
+		<!-- Breadcrumb -->
+		<nav class="text-sm text-zinc-400">
+			<a class="hover:text-white" href="/">Inicio</a>
+			<span class="mx-2">/</span>
+			<a class="hover:text-white" href="/#presentaciones">Presentaciones</a>
+			<span class="mx-2">/</span>
+			<span class="text-zinc-200">{producto.size}</span>
+		</nav>
+
+		<div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
+			<!-- Imagen -->
+			<div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6">
+				<div class="flex items-center justify-between">
+					<div
+						class="inline-flex items-center gap-2 rounded-full border border-zinc-700/70 bg-zinc-950/40 px-3 py-1 text-xs text-zinc-200">
+						<span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+						<span class="font-semibold">Desde {site.since}</span>
+					</div>
+				</div>
+
+				<div class="mt-6 flex items-center justify-center">
+					<img
+						src={bottleSrc}
+						alt={producto.title}
+						class="max-h-[420px] w-auto object-contain"
+						loading="eager"
+					/>
+				</div>
+
+				<div class="mt-6 border-t border-zinc-800 pt-4 text-sm text-zinc-300">
+					<div class="font-semibold text-zinc-100">{producto.highlight}</div>
+					<div class="text-zinc-400 mt-1">
+						Aceite de soja fraccionado · Presentación {producto.size}
+					</div>
+				</div>
+			</div>
+
+			<!-- Contenido comercial -->
+			<div>
+				<div class="text-xs tracking-widest text-zinc-400">ACEITE DE SOJA</div>
+				<h1 class="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight">
+					{producto.title}
+				</h1>
+
+				<p class="mt-3 text-zinc-300">{producto.description}</p>
+
+				<div class="mt-5 flex flex-wrap gap-2">
+					<span
+						class="rounded-full border border-zinc-700/70 bg-zinc-950/40 px-3 py-1 text-xs text-zinc-200">
+						USO: {producto.use.toUpperCase()}
+					</span>
+					<span
+						class="rounded-full border border-zinc-700/70 bg-zinc-950/40 px-3 py-1 text-xs text-zinc-200">
+						PRESENTACIÓN: {producto.size}
+					</span>
+					<span
+						class="rounded-full border border-zinc-700/70 bg-zinc-950/40 px-3 py-1 text-xs text-zinc-200">
+						VOLUMEN: {producto.litros} L
+					</span>
+				</div>
+
+				<!-- Beneficios -->
+				<div class="mt-6 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
+					<div class="font-semibold">Por qué elegir esta presentación</div>
+					<ul class="mt-3 space-y-2 text-sm text-zinc-300">
+						{
+							producto.bullets.map((b) => (
+								<li class="flex gap-2">
+									<span class="text-emerald-400">•</span>
+									<span>{b}</span>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+
+				<!-- Ideal para -->
+				<div class="mt-4 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
+					<div class="font-semibold">Ideal para</div>
+					<div class="mt-3 flex flex-wrap gap-2">
+						{
+							producto.idealFor.map((t) => (
+								<span class="rounded-full bg-zinc-950/50 border border-zinc-800 px-3 py-1 text-xs text-zinc-200">
+									{t}
+								</span>
+							))
+						}
+					</div>
+				</div>
+
+				<!-- CTAs -->
+				<div class="mt-6 flex flex-col sm:flex-row gap-3">
+					<a
+						href={waMinorista}
+						target="_blank"
+						rel="noopener"
+						class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-5 py-3 font-semibold hover:bg-emerald-500">
+						Consultar (minorista)
+					</a>
+					<a
+						href={waMayorista}
+						target="_blank"
+						rel="noopener"
+						class="inline-flex items-center justify-center rounded-xl border border-amber-400/40 px-5 py-3 font-semibold hover:border-amber-400/70 hover:shadow-[0_0_16px_rgba(251,191,36,0.18)]">
+						Pedir catálogo (mayorista)
+					</a>
+				</div>
+
+				<p class="mt-4 text-xs text-zinc-400">
+					WhatsApp: <span class="text-zinc-200 font-semibold"
+						>{site.phoneDisplay}</span
+					>
+				</p>
+
+				<a
+					href="/#presentaciones"
+					class="mt-6 inline-block text-sm text-zinc-300 hover:text-white">
+					← Volver a presentaciones
+				</a>
+			</div>
+		</div>
+
+		<!-- Relacionados -->
+		<section class="mt-12">
+			<h2 class="text-xl font-semibold">Otras presentaciones</h2>
+			<div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+				{
+					presentaciones
+						.filter((p) => p.slug !== producto.slug)
+						.slice(0, 4)
+						.map((p) => (
+							<a
+								href={`/productos/${p.slug}`}
+								class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 hover:bg-zinc-900/60 transition
+                     hover:border-amber-400/70 hover:ring-1 hover:ring-amber-400/40">
+								<div class="text-xs tracking-widest text-zinc-400">
+									ACEITE DE SOJA
+								</div>
+								<div class="mt-2 text-lg font-semibold">{p.size}</div>
+								<div class="mt-1 text-xs text-zinc-400">{p.use}</div>
+							</a>
+						))
+				}
+			</div>
+		</section>
+		<!-- Cómo comprar -->
+		<div class="mt-4 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
+			<div class="font-semibold">Cómo comprar</div>
+			<p class="mt-2 text-sm text-zinc-400">
+				Te lo hacemos simple: elegís la presentación y coordinamos por WhatsApp.
+			</p>
+
+			<ol class="mt-4 space-y-3 text-sm">
+				<li class="flex gap-3">
+					<div
+						class="h-7 w-7 shrink-0 rounded-full bg-zinc-950/60 border border-zinc-800 flex items-center justify-center font-semibold text-zinc-200">
+						1
+					</div>
+					<div class="text-zinc-300">
+						<span class="font-semibold text-zinc-100"
+							>Elegí la presentación</span
+						>
+						<span class="text-zinc-400">
+							(esta página ya corresponde a {producto.size}).</span
+						>
+					</div>
+				</li>
+
+				<li class="flex gap-3">
+					<div
+						class="h-7 w-7 shrink-0 rounded-full bg-zinc-950/60 border border-zinc-800 flex items-center justify-center font-semibold text-zinc-200">
+						2
+					</div>
+					<div class="text-zinc-300">
+						<span class="font-semibold text-zinc-100"
+							>Escribinos por WhatsApp</span
+						>
+						<span class="text-zinc-400">
+							para confirmar precio y disponibilidad.</span
+						>
+					</div>
+				</li>
+
+				<li class="flex gap-3">
+					<div
+						class="h-7 w-7 shrink-0 rounded-full bg-zinc-950/60 border border-zinc-800 flex items-center justify-center font-semibold text-zinc-200">
+						3
+					</div>
+					<div class="text-zinc-300">
+						<span class="font-semibold text-zinc-100"
+							>Coordinamos entrega o retiro</span
+						>
+						<span class="text-zinc-400"> según tu zona y cantidad.</span>
+					</div>
+				</li>
+			</ol>
+
+			<div class="mt-5 flex flex-col sm:flex-row gap-3">
+				<a
+					href={waMinorista}
+					target="_blank"
+					rel="noopener"
+					class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-5 py-3 font-semibold hover:bg-emerald-500">
+					Consultar (minorista)
+				</a>
+
+				<a
+					href={waMayorista}
+					target="_blank"
+					rel="noopener"
+					class="inline-flex items-center justify-center rounded-xl border border-amber-400/40 px-5 py-3 font-semibold hover:border-amber-400/70 hover:shadow-[0_0_16px_rgba(251,191,36,0.18)]">
+					Pedir catálogo (mayorista)
+				</a>
+			</div>
+
+			<p class="mt-3 text-xs text-zinc-500">
+				Atención por WhatsApp: <span class="text-zinc-200 font-semibold"
+					>{site.phoneDisplay}</span
+				>
+			</p>
+		</div>
+	</div>
+</BaseLayout>

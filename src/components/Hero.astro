@@ -1,0 +1,79 @@
+---
+import { site } from '../data/site';
+import heroImg from '../assets/img/hero-productos.jpg';
+
+const waMinorista = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(site.waMessageMinorista)}`;
+const waMayorista = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(site.waMessageMayorista)}`;
+---
+
+<section id="inicio" class="relative">
+	<div class="absolute inset-0">
+		<img
+			src={heroImg.src}
+			alt="Aceites Muccino"
+			class="h-full w-full object-cover"
+		/>
+		<div
+			class="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/70 to-zinc-950/20">
+		</div>
+	</div>
+
+	<div class="relative mx-auto max-w-6xl px-4 py-16 sm:py-24">
+		<div class="max-w-xl">
+			<!-- Badge desde 2009 -->
+			<div
+				class="mb-3 inline-flex items-center gap-2 rounded-full border border-zinc-700/70 bg-zinc-950/40 px-3 py-1 text-xs text-zinc-200">
+				<span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+				<span class="font-semibold">Desde {site.since}</span>
+			</div>
+
+			<h1 class="text-3xl sm:text-4xl font-semibold tracking-tight">
+				{site.brand}
+			</h1>
+
+			<!-- Trust line -->
+			<p class="mt-2 text-sm text-zinc-300">
+				<span class="inline-flex items-center gap-2">
+					<span class="h-1.5 w-10 rounded-full bg-emerald-500"></span>
+					<span>{site.trustLine}</span>
+				</span>
+			</p>
+
+			<p class="mt-4 text-zinc-300">
+				{site.tagline}
+			</p>
+
+			<div class="mt-7 flex flex-wrap gap-3">
+				<a
+					href="#presentaciones"
+					class="rounded-xl bg-zinc-100 px-4 py-2 font-semibold text-zinc-900 hover:bg-white">
+					Ver presentaciones
+				</a>
+
+				<!-- Catálogo (Mayorista) -->
+				<a
+					href={waMayorista}
+					target="_blank"
+					rel="noopener"
+					class="rounded-xl bg-emerald-600 px-4 py-2 font-semibold hover:bg-emerald-500">
+					Pedir catálogo (mayorista)
+				</a>
+
+				<!-- Consulta (Minorista) -->
+				<a
+					href={waMinorista}
+					target="_blank"
+					rel="noopener"
+					class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold hover:border-zinc-500">
+					Consultar (minorista)
+				</a>
+			</div>
+
+			<div class="mt-8 flex items-center gap-2 text-xs text-zinc-400">
+				<span class="h-1.5 w-10 rounded-full bg-emerald-500"></span>
+				<span class="h-1.5 w-10 rounded-full bg-white/70"></span>
+				<span class="h-1.5 w-10 rounded-full bg-red-500"></span>
+			</div>
+		</div>
+	</div>
+</section>
