@@ -4,17 +4,25 @@ import Header from '../components/Header.astro';
 import Pedidos from '../components/Pedidos.astro';
 import Footer from '../components/Footer.astro';
 import WhatsappFloat from '../components/WhatsappFloat.astro';
-import { site } from '../data/site';
+import { siteInfo } from '../data/siteInfo';
 ---
 
 <BaseLayout
-	title={`Pedidos | ${site.brand}`}
-	description={`Hace tu pedido de aceite de soja ${site.brand} y coordinamos por WhatsApp.`}>
+	title={`Pedidos | ${siteInfo.name}`}
+	description={`Armá tu consulta de pedido de aceite de soja ${siteInfo.name} y coordinamos la entrega por WhatsApp.`}>
 	<Header />
-	<main>
+	<main class="py-8">
+		<!-- Breadcrumb -->
+		<div class="mx-auto max-w-6xl px-4 text-xs sm:text-sm text-charcoal-muted mb-4">
+			<nav class="flex gap-2 items-center">
+				<a class="hover:text-forest transition" href="/">Inicio</a>
+				<span>/</span>
+				<span class="text-charcoal font-medium">Pedidos</span>
+			</nav>
+		</div>
+
 		<Pedidos />
 	</main>
 	<Footer />
 	<WhatsappFloat />
 </BaseLayout>
-

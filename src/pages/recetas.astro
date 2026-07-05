@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsappFloat from '../components/WhatsappFloat.astro';
+import { recipes } from '../data/recipes';
+import { siteInfo } from '../data/siteInfo';
+import { Image } from 'astro:assets';
+
+// Group categories for filtering
+const categories = ['Todos', 'Tradicional', 'Fritos', 'Salados'];
+---
+
+<BaseLayout
+	title={`Recetario Muccino | Platos Tradicionales`}
+	description={`Descubrí deliciosas recetas tradicionales y hogareñas preparadas con Aceite de Soja Muccino. El ingrediente ideal para tu cocina.`}>
+	<Header />
+	
+	<main class="py-8 min-h-screen">
+		<!-- Breadcrumb -->
+		<div class="mx-auto max-w-6xl px-4 text-xs sm:text-sm text-charcoal-muted mb-6">
+			<nav class="flex gap-2 items-center">
+				<a class="hover:text-forest transition" href="/">Inicio</a>
+				<span>/</span>
+				<span class="text-charcoal font-medium">Recetas</span>
+			</nav>
+		</div>
+
+		<!-- Hero / Header of Section -->
+		<section class="mx-auto max-w-6xl px-4 pb-10">
+			<div class="text-center max-w-2xl mx-auto space-y-4">
+				<span class="font-script text-3xl text-forest block">Cocina con Amor</span>
+				<h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold tracking-tight text-charcoal leading-tight">
+					El Recetario de la Familia
+				</h1>
+				<div class="h-1 w-20 bg-terracotta mx-auto rounded-full"></div>
+				<p class="text-sm sm:text-base text-charcoal-muted leading-relaxed">
+					En Muccino sabemos que los mejores momentos se viven alrededor de la mesa. Te compartimos nuestras recetas favoritas para lograr ese sabor único y crujiente en tu hogar.
+				</p>
+			</div>
+		</section>
+
+		<!-- Filters -->
+		<section class="mx-auto max-w-6xl px-4 mb-8">
+			<div class="flex flex-wrap justify-center gap-2">
+				{categories.map((cat, idx) => (
+					<button
+						type="button"
+						data-filter={cat === 'Todos' ? 'all' : cat}
+						class={`recipe-filter-btn px-4 py-2 text-xs sm:text-sm font-semibold rounded-full border transition cursor-pointer ${
+							idx === 0
+								? 'bg-forest border-forest text-cream font-bold'
+								: 'bg-cream-dark/45 border-border-warm text-charcoal hover:bg-cream-dark'
+						}`}
+					>
+						{cat}
+					</button>
+				))}
+			</div>
+		</section>
+
+		<!-- Recipes Grid -->
+		<section class="mx-auto max-w-6xl px-4 pb-16">
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="recipes-grid">
+				{recipes.map((recipe) => (
+					<article
+						data-category={recipe.category}
+						class="recipe-card group flex flex-col bg-cream-dark/30 rounded-3xl border border-border-warm overflow-hidden hover:border-forest/30 hover:shadow-lg hover:shadow-charcoal/5 transition-all duration-300">
+						
+						<!-- Photo -->
+						<div class="relative overflow-hidden aspect-[4/3] bg-cream-dark/50 border-b border-border-warm">
+							<Image
+								src={recipe.image}
+								alt={recipe.title}
+								class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+								widths={[240, 480, 720]}
+								sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+								loading="lazy"
+							/>
+							<span class="absolute top-4 left-4 bg-forest text-cream text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+								{recipe.category}
+							</span>
+						</div>
+
+						<!-- Content -->
+						<div class="p-6 flex flex-col flex-grow">
+							<!-- Badges -->
+							<div class="flex items-center gap-3 text-xs text-charcoal-muted mb-3">
+								<span class="flex items-center gap-1">
+									<svg class="w-3.5 h-3.5 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+										<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0" />
+									</svg>
+									{recipe.prepTime}
+								</span>
+								<span>•</span>
+								<span class="flex items-center gap-1">
+									<svg class="w-3.5 h-3.5 text-mustard" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+										<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+									</svg>
+									{recipe.difficulty}
+								</span>
+							</div>
+
+							<h3 class="font-serif text-xl font-bold text-charcoal group-hover:text-forest transition-colors leading-snug">
+								<a href={`/recetas/${recipe.slug}`}>{recipe.title}</a>
+							</h3>
+							
+							<p class="mt-2 text-sm text-charcoal-muted leading-relaxed flex-grow line-clamp-3">
+								{recipe.description}
+							</p>
+
+							<!-- CTA -->
+							<div class="mt-5 pt-4 border-t border-border-warm/60">
+								<a
+									href={`/recetas/${recipe.slug}`}
+									class="inline-flex w-full items-center justify-center rounded-xl bg-forest px-4 py-2.5 text-xs sm:text-sm font-semibold text-cream hover:bg-forest-light transition-all duration-300">
+									Ver Receta Completa
+								</a>
+							</div>
+						</div>
+					</article>
+				))}
+			</div>
+		</section>
+	</main>
+
+	<Footer />
+	<WhatsappFloat />
+</BaseLayout>
+
+<script>
+	// JavaScript for filtering
+	const filterButtons = document.querySelectorAll('.recipe-filter-btn');
+	const recipeCards = document.querySelectorAll('.recipe-card');
+
+	filterButtons.forEach((btn) => {
+		btn.addEventListener('click', () => {
+			// Update active class
+			filterButtons.forEach((b) => {
+				b.classList.remove('bg-forest', 'border-forest', 'text-cream', 'font-bold');
+				b.classList.add('bg-cream-dark/45', 'border-border-warm', 'text-charcoal');
+			});
+
+			btn.classList.remove('bg-cream-dark/45', 'border-border-warm', 'text-charcoal');
+			btn.classList.add('bg-forest', 'border-forest', 'text-cream', 'font-bold');
+
+			const filter = btn.getAttribute('data-filter');
+
+			recipeCards.forEach((card) => {
+				const category = card.getAttribute('data-category');
+				if (filter === 'all' || category === filter) {
+					card.classList.remove('hidden');
+				} else {
+					card.classList.add('hidden');
+				}
+			});
+		});
+	});
+</script>

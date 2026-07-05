@@ -1,28 +1,28 @@
-<section id="calidad" class="mx-auto max-w-6xl px-4 py-14">
-	<h2 class="text-2xl font-semibold">Calidad y fraccionamiento</h2>
-	<p class="text-zinc-400 mt-1">
-		Procesos pensados para consistencia, higiene y confianza.
+<section id="calidad" class="mx-auto max-w-6xl px-4 py-16">
+	<h2 class="font-serif text-3xl font-bold tracking-tight text-charcoal">Calidad y Fraccionamiento</h2>
+	<p class="text-sm sm:text-base text-charcoal-muted mt-2">
+		Procesos pensados para consistencia, higiene y absoluta confianza.
 	</p>
 
-	<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+	<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
 		{
 			[
 				[
-					'Fraccionamiento controlado',
-					'Cuidamos cada etapa para mantener un producto uniforme.',
+					'Fraccionamiento Controlado',
+					'Cuidamos minuciosamente cada etapa para mantener un producto uniforme de máxima pureza.',
 				],
 				[
-					'Envases seguros',
-					'Sellado confiable para conservar calidad y facilitar el manejo.',
+					'Envases Seguros y Robustos',
+					'Sellado hermético de alta calidad para conservar la frescura y facilitar el transporte.',
 				],
 				[
-					'Atención directa',
-					'Consultas rápidas para pedidos minoristas y mayoristas.',
+					'Atención Directa y Eficiente',
+					'Comunicación rápida y personalizada para coordinar despachos minoristas y mayoristas.',
 				],
 			].map(([t, d]) => (
-				<div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
-					<div class="font-semibold">{t}</div>
-					<div class="text-sm text-zinc-400 mt-2">{d}</div>
+				<div class="rounded-3xl border border-border-warm bg-cream-dark/25 p-6 backdrop-blur-sm shadow-sm hover:bg-cream-light hover:shadow-md transition-all duration-300">
+					<div class="font-serif text-lg font-bold text-charcoal">{t}</div>
+					<div class="text-sm text-charcoal-muted mt-2 leading-relaxed">{d}</div>
 				</div>
 			))
 		}

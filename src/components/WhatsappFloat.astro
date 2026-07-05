@@ -1,17 +1,49 @@
 ---
-import { site } from '../data/site';
-import logoM from '../assets/img/logo-m.jpg';
-const waLink = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(site.waDefaultMessage)}`;
+import { siteInfo } from '../data/siteInfo';
+
+const waLink = `https://wa.me/${siteInfo.contact.phoneWa}?text=${encodeURIComponent(
+	'Hola, quiero realizar una consulta sobre el aceite de soja Muccino.'
+)}`;
 ---
 
 <a
 	href={waLink}
 	target="_blank"
 	rel="noopener"
-	class="fixed bottom-4 right-4 z-50 flex items-center gap-3 rounded-2xl bg-zinc-900/90 border border-zinc-800 px-3 py-2 shadow-lg hover:bg-zinc-900">
-	<img src={logoM.src} alt="M" class="h-9 w-9 rounded-xl" />
-	<div class="hidden sm:block">
-		<div class="text-xs text-zinc-400">Consultas</div>
-		<div class="text-sm font-semibold">WhatsApp</div>
+	class="whatsapp-float fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-2xl bg-forest/90 border border-forest-light/40 px-3.5 py-2.5 shadow-xl backdrop-blur-sm hover:bg-forest hover:border-forest-light hover:scale-105 transition-all duration-300 group">
+	<div class="relative flex h-9 w-9 items-center justify-center">
+		<span class="absolute inline-flex h-full w-full rounded-xl bg-mustard/30 animate-ping group-hover:animate-none"></span>
+		<svg
+			class="relative h-9 w-9 rounded-xl border border-forest-light/20 bg-cream/10 p-1 text-white"
+			viewBox="0 0 119.80133 105.23065"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<g transform="translate(-265.97731,-785.19337)">
+				<g transform="matrix(1.3333333,0,0,-1.3333333,0,1587.52)">
+					{/* Capa de fondo/sombra en blanco semi-transparente */}
+					<path
+						d="m 287.221,528.382 c 0,-2.075 0.705,-3.929 2.113,-5.56 h -28.911 c 1.483,1.631 2.224,3.485 2.224,5.56 v 49.927 l -20.571,-55.487 h -8.784 l -20.905,55.709 v -50.149 c 0,-2.075 0.704,-3.929 2.113,-5.56 h -10.786 c 1.482,1.631 2.224,3.485 2.224,5.56 l -0.112,62.826 c 0,2.965 -0.704,5.596 -2.112,7.894 h 27.131 l 16.346,-43.81 c 2.817,8.154 5.374,15.419 7.672,21.794 0.964,2.743 1.909,5.411 2.836,8.006 0.927,2.594 1.761,4.929 2.502,7.005 0.741,2.076 1.334,3.744 1.779,5.004 0.445,1.26 0.667,1.927 0.667,2.001 h 26.687 c -1.408,-2.594 -2.113,-5.226 -2.113,-7.894 z"
+						fill="currentColor"
+						fill-opacity="0.3"
+					/>
+					{/* Capa intermedia en blanco semi-transparente */}
+					<path
+						d="m 284.581,529.822 c 0,-2.075 0.705,-3.929 2.113,-5.56 h -28.911 c 1.483,1.631 2.224,3.485 2.224,5.56 v 49.927 l -20.571,-55.487 h -8.784 l -20.905,55.709 v -50.149 c 0,-2.075 0.704,-3.929 2.113,-5.56 h -10.786 c 1.482,1.631 2.224,3.485 2.224,5.56 l -0.112,62.826 c 0,2.965 -0.704,5.596 -2.112,7.894 h 27.131 l 16.346,-43.81 c 2.817,8.154 5.374,15.419 7.672,21.794 0.964,2.743 1.909,5.411 2.836,8.006 0.927,2.594 1.761,4.929 2.502,7.005 0.741,2.076 1.334,3.744 1.779,5.004 0.445,1.26 0.667,1.927 0.667,2.001 h 26.687 c -1.408,-2.594 -2.113,-5.226 -2.113,-7.894 z"
+						fill="currentColor"
+						fill-opacity="0.6"
+					/>
+					{/* Capa superior en blanco sólido */}
+					<path
+						d="m 282.991,531.025 c 0,-2.075 0.704,-3.929 2.112,-5.56 h -28.91 c 1.482,1.631 2.224,3.485 2.224,5.56 v 49.927 l -20.572,-55.487 h -8.784 l -20.905,55.709 v -50.149 c 0,-2.075 0.705,-3.929 2.113,-5.56 h -10.786 c 1.483,1.631 2.224,3.485 2.224,5.56 l -0.111,62.826 c 0,2.965 -0.704,5.596 -2.113,7.894 h 27.132 l 16.345,-43.811 c 2.817,8.155 5.375,15.42 7.673,21.795 0.964,2.743 1.909,5.411 2.835,8.006 0.927,2.594 1.761,4.929 2.502,7.005 0.742,2.076 1.335,3.744 1.779,5.004 0.445,1.26 0.668,1.927 0.668,2.001 h 26.686 c -1.408,-2.594 -2.112,-5.226 -2.112,-7.894 z"
+						fill="currentColor"
+					/>
+				</g>
+			</g>
+		</svg>
+	</div>
+
+	<div class="hidden sm:block text-left">
+		<div class="text-[10px] uppercase font-bold tracking-wider text-cream/70">Consultas</div>
+		<div class="text-xs font-bold text-cream">WhatsApp</div>
 	</div>
 </a>

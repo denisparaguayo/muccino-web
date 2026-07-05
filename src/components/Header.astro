@@ -1,36 +1,36 @@
 ---
-import { site } from '../data/site';
-import logoM from '../assets/img/logo-m.jpg';
+import { siteInfo } from '../data/siteInfo';
+import logoWhite from '../assets/img/logos/logo-blanco-sin-fondo.svg';
 
-const waLink = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(site.waDefaultMessage)}`;
+
+const waLink = `https://wa.me/${siteInfo.contact.phoneWa}?text=${encodeURIComponent(
+	'Hola, quiero consultar por los aceites Muccino. ¿Me brindan más información?'
+)}`;
 ---
 
 <header
-	class="sticky top-0 z-50 border-b border-zinc-800/60 bg-zinc-950/80 backdrop-blur">
-	<div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-		<a href="/" class="flex items-center gap-3">
-			<img src={logoM.src} alt="Muccino M" class="h-9 w-9 rounded-lg" />
-			<div class="leading-tight">
-				<div class="font-semibold">{site.brand}</div>
-				<div class="text-xs text-zinc-400 hidden sm:block">
-					Aceite comestible fraccionado
-				</div>
-			</div>
+	class="sticky top-0 z-50 border-b border-forest/20 bg-forest/95 text-white backdrop-blur-md shadow-md">
+	<div class="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
+		<a href="/" class="flex items-center">
+			<img src={logoWhite.src} alt="Muccino" class="h-11 sm:h-14 w-auto transition-transform hover:scale-102" />
 		</a>
 
-		<nav class="hidden md:flex items-center gap-6 text-sm text-zinc-300">
-			<a class="hover:text-white" href="/presentaciones">Presentaciones</a>
-			<a class="hover:text-white" href="/#calidad">Calidad</a>
-			<a class="hover:text-white" href="/nosotros">Nosotros</a>
-			<a class="hover:text-white" href="/pedidos">Pedidos</a>
-			<a class="hover:text-white" href="/contacto">Contacto</a>
+		<nav class="hidden lg:flex items-center gap-6 text-sm text-white/80 font-semibold">
+			<a class="hover:text-white hover:underline decoration-mustard decoration-2 underline-offset-4 transition" href="/">Inicio</a>
+			<a class="hover:text-white hover:underline decoration-mustard decoration-2 underline-offset-4 transition" href="/productos">Productos</a>
+			<a class="hover:text-white hover:underline decoration-mustard decoration-2 underline-offset-4 transition" href="/recetas">Recetario</a>
+			<a class="hover:text-white hover:underline decoration-mustard decoration-2 underline-offset-4 transition" href="/mayorista">Mayorista</a>
+			<a class="hover:text-white hover:underline decoration-mustard decoration-2 underline-offset-4 transition" href="/nosotros">Nosotros</a>
+			<a class="hover:text-white hover:underline decoration-mustard decoration-2 underline-offset-4 transition" href="/pedidos">Pedidos</a>
+			<a class="hover:text-white hover:underline decoration-mustard decoration-2 underline-offset-4 transition" href="/contacto">Contacto</a>
 		</nav>
 
 		<div class="flex items-center gap-2">
+			<!-- Mobile Menu Button -->
 			<button
 				id="mobile-menu-button"
 				type="button"
-				class="md:hidden inline-flex items-center justify-center rounded-xl border border-zinc-800 bg-zinc-950/60 px-3 py-2 text-zinc-200 hover:bg-zinc-900/60"
+				class="lg:hidden inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-white hover:bg-white/20 transition cursor-pointer"
 				aria-controls="mobile-menu"
 				aria-expanded="false"
 				aria-label="Abrir menu">
@@ -49,39 +49,44 @@ const waLink = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(site.waD
 				</svg>
 			</button>
 
+			<!-- WhatsApp CTA -->
 			<a
 				href={waLink}
 				target="_blank"
 				rel="noopener"
-				class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-3 py-2 text-sm font-semibold hover:bg-emerald-500">
-				<!-- Icono (siempre visible) -->
+				class="inline-flex items-center gap-2 rounded-xl bg-terracotta px-4 py-2 text-sm font-bold text-cream hover:bg-terracotta-light transition hover:shadow-lg hover:shadow-terracotta/20">
 				<svg
-					class="h-5 w-5"
+					class="h-4 w-4 fill-current text-cream"
 					viewBox="0 0 24 24"
-					fill="currentColor"
 					aria-hidden="true">
 					<path
 						d="M20.52 3.48A11.94 11.94 0 0 0 12.07 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.15 1.6 5.97L0 24l6.28-1.64a11.86 11.86 0 0 0 5.79 1.48h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.46-8.46z"
 					></path>
 				</svg>
-
-				<!-- Texto SOLO desktop -->
 				<span class="hidden sm:inline">
-					{site.phoneDisplay}
+					Contactar Ventas
 				</span>
 			</a>
 		</div>
 	</div>
 
-	<div class="mx-auto max-w-6xl px-4 pb-3 md:hidden">
+	<!-- Mobile Menu Panel -->
+	<div class="mx-auto max-w-6xl px-4 pb-3 lg:hidden">
 		<nav
 			id="mobile-menu"
-			class="hidden rounded-xl border border-zinc-800 bg-zinc-950/60 p-3 text-sm text-zinc-200">
-			<a class="block rounded-lg px-3 py-2 hover:bg-zinc-900/60" href="/presentaciones">Presentaciones</a>
-			<a class="block rounded-lg px-3 py-2 hover:bg-zinc-900/60" href="/#calidad">Calidad</a>
-			<a class="block rounded-lg px-3 py-2 hover:bg-zinc-900/60" href="/nosotros">Nosotros</a>
-			<a class="block rounded-lg px-3 py-2 hover:bg-zinc-900/60" href="/pedidos">Pedidos</a>
-			<a class="block rounded-lg px-3 py-2 hover:bg-zinc-900/60" href="/contacto">Contacto</a>
+			class="hidden rounded-2xl border border-white/10 bg-forest-light p-3 text-sm text-white/90 space-y-1 shadow-inner">
+			<a class="block rounded-lg px-3 py-2 hover:bg-white/10 hover:text-white font-medium" href="/">Inicio</a>
+			<a class="block rounded-lg px-3 py-2 hover:bg-white/10 hover:text-white font-medium" href="/productos">Productos</a>
+			<a class="block rounded-lg px-3 py-2 hover:bg-white/10 hover:text-white font-medium" href="/recetas">Recetario</a>
+			<a class="block rounded-lg px-3 py-2 hover:bg-white/10 hover:text-white font-medium" href="/mayorista">Mayorista</a>
+			<a class="block rounded-lg px-3 py-2 hover:bg-white/10 hover:text-white font-medium" href="/nosotros">Nosotros</a>
+			<a class="block rounded-lg px-3 py-2 hover:bg-white/10 hover:text-white font-medium" href="/pedidos">Pedidos</a>
+			<a class="block rounded-lg px-3 py-2 hover:bg-white/10 hover:text-white font-medium" href="/contacto">Contacto</a>
+			
+			<div class="border-t border-white/10 mt-2 pt-2 px-3 text-xs text-white/60 space-y-1">
+				<div>Fijo: <a href={`tel:${siteInfo.contact.phoneLandline}`} class="text-white/80">{siteInfo.contact.phoneLandlineDisplay}</a></div>
+				<div>WhatsApp: <a href={waLink} target="_blank" rel="noopener" class="text-mustard font-bold">{siteInfo.contact.phoneWaDisplay}</a></div>
+			</div>
 		</nav>
 	</div>
 
@@ -127,7 +132,7 @@ const waLink = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(site.waD
 				if (e.key === 'Escape') closeMenu();
 			});
 
-			const mq = window.matchMedia('(min-width: 768px)');
+			const mq = window.matchMedia('(min-width: 1024px)');
 			if (mq.addEventListener) {
 				mq.addEventListener('change', (e) => {
 					if (e.matches) closeMenu();

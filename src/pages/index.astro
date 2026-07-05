@@ -2,25 +2,76 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
-import Presentaciones from '../components/Presentaciones.astro';
-import Calidad from '../components/Calidad.astro';
 import Segmentos from '../components/Segmentos.astro';
-import Nosotros from '../components/Nosotros.astro';
-import Contacto from '../components/Contacto.astro';
+import Catalogo from '../components/Catalogo.astro';
+import Calidad from '../components/Calidad.astro';
+import FormularioB2B from '../components/FormularioB2B.astro';
 import Footer from '../components/Footer.astro';
 import WhatsappFloat from '../components/WhatsappFloat.astro';
-import { site } from '../data/site';
+import { siteInfo } from '../data/siteInfo';
+import { recipes } from '../data/recipes';
+import { Image } from 'astro:assets';
 ---
 
-<BaseLayout title={site.brand} description={site.tagline}>
+<BaseLayout title={siteInfo.name} description={siteInfo.description}>
 	<Header />
-	<main>
+	<main class="space-y-6 pb-16">
 		<Hero />
-		<Presentaciones />
-		<Calidad />
 		<Segmentos />
-		<Nosotros />
-		<Contacto />
+		<Catalogo />
+		<Calidad />
+
+		<!-- Section: Recetario Preview -->
+		<section class="mx-auto max-w-6xl px-4 py-16 border-t border-border-warm/60">
+			<div class="text-center max-w-2xl mx-auto space-y-3">
+				<span class="font-script text-3xl text-forest block">Cocina Tradicional</span>
+				<h2 class="font-serif text-3xl font-bold tracking-tight text-charcoal sm:text-4xl">
+					Recetas con Sabor de Hogar
+				</h2>
+				<p class="text-sm sm:text-base text-charcoal-muted">
+					Descubrí los mejores secretos culinarios paraguayos preparados de forma perfecta con el toque crujiente de Aceite Muccino.
+				</p>
+			</div>
+
+			<div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+				{recipes.slice(0, 3).map((recipe) => (
+					<div class="group flex flex-col bg-cream-dark/25 rounded-3xl border border-border-warm overflow-hidden hover:border-forest/30 hover:shadow-lg transition-all duration-300">
+						<div class="aspect-[4/3] overflow-hidden bg-cream-dark/50 border-b border-border-warm">
+							<Image
+								src={recipe.image}
+								alt={recipe.title}
+								class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+								widths={[240, 480, 720]}
+								sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+								loading="lazy"
+							/>
+						</div>
+						<div class="p-6 flex flex-col flex-grow">
+							<span class="text-[10px] font-bold text-forest uppercase tracking-wider">{recipe.category}</span>
+							<h3 class="font-serif text-lg font-bold text-charcoal mt-1 group-hover:text-forest transition-colors">
+								<a href={`/recetas/${recipe.slug}`}>{recipe.title}</a>
+							</h3>
+							<p class="mt-2 text-xs sm:text-sm text-charcoal-muted leading-relaxed flex-grow line-clamp-2">
+								{recipe.description}
+							</p>
+							<div class="mt-4 pt-4 border-t border-border-warm/60">
+								<a href={`/recetas/${recipe.slug}`} class="text-xs font-bold text-forest hover:text-forest-light flex items-center gap-1.5 transition">
+									Ver preparación <span>→</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+
+			<div class="mt-10 text-center">
+				<a href="/recetas" class="inline-flex items-center justify-center rounded-xl bg-forest px-6 py-3.5 text-sm font-bold text-cream hover:bg-forest-light transition shadow-md shadow-forest/15">
+					Ver Todas las Recetas
+				</a>
+			</div>
+		</section>
+
+		<FormularioB2B />
 	</main>
 	<Footer />
 	<WhatsappFloat />

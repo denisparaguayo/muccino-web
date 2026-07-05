@@ -1,41 +1,203 @@
-<section class="mx-auto max-w-6xl px-4 py-14">
-	<h2 class="text-2xl font-semibold">Ideal para</h2>
-	<p class="text-zinc-400 mt-1">
-		Presentaciones pensadas para distintos consumos.
-	</p>
+---
+import { Image } from 'astro:assets';
+import oilSplashRight from '../assets/img/oil-splash-right.png';
+import bottle900 from '../assets/img/botellas/900-ml.png';
+import bottle1_5 from '../assets/img/botellas/1.5-litros.png';
+import bottle2 from '../assets/img/botellas/2-litros.png';
+import bottle5 from '../assets/img/botellas/5-litros.png';
+---
 
-	<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Segment Intro Split Banner (Inverted Hero Style) -->
+<section id="segmentos" class="relative overflow-hidden bg-cream-light flex flex-col lg:flex-row items-stretch border-b border-border-warm/60">
+	
+	<!-- Left Column: Copy and CTAs (50% on desktop) -->
+	<div class="w-full lg:w-1/2 bg-cream-light flex items-center py-20 px-8 sm:py-24 sm:px-12 lg:pl-16 lg:pr-12 relative">
+		<!-- Background ambient light decoration -->
+		<div class="absolute top-0 left-0 w-32 h-32 opacity-15 pointer-events-none select-none bg-mustard rounded-full blur-3xl"></div>
+		
+		<div class="max-w-2xl mx-auto lg:mx-0 space-y-7 relative z-10 text-center lg:text-left flex flex-col items-center lg:items-start">
+			<!-- Handwritten Script Heading -->
+			<span class="font-script text-4xl sm:text-5xl lg:text-5.5xl text-forest leading-snug">
+				Cada mesa es única, pero todas eligen la misma calidad
+			</span>
+
+			<!-- Thin elegant separator line -->
+			<div class="w-20 h-[2px] bg-mustard rounded-full opacity-80"></div>
+
+			<!-- Description -->
+			<p class="text-base sm:text-lg text-charcoal-muted leading-relaxed">
+				Conocé las presentaciones de la familia de Aceite Muccino y sus diferentes formatos, diseñados para adaptarse a la medida de tu hogar o comercio.
+			</p>
+
+			<!-- CTA Button -->
+			<div class="pt-2">
+				<a 
+					href="#productos" 
+					class="inline-flex items-center justify-center rounded-full bg-forest px-10 py-4 text-base font-bold text-cream hover:bg-forest-light hover:scale-105 active:scale-95 transition-all duration-300 shadow-md shadow-forest/20 cursor-pointer"
+				>
+					Nuestros Productos
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Right Column: Bottles Surrounded by Oil Splash (50% on desktop) -->
+	<div class="w-full lg:w-1/2 bg-cream-light min-h-[45vh] lg:min-h-auto flex items-center justify-center p-6 sm:p-12 relative overflow-hidden select-none">
+		<!-- Soft white radial spotlight behind the bottles to blend and blur them seamlessly -->
+		<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,1)_0%,rgba(255,255,255,0)_75%)] pointer-events-none z-0"></div>
+		
+		<!-- Subtle ambient glow -->
+		<div class="absolute right-0 bottom-0 w-96 h-96 opacity-10 pointer-events-none select-none bg-mustard rounded-full blur-3xl"></div>
+		<div class="absolute left-1/4 top-1/4 w-96 h-96 opacity-10 pointer-events-none select-none bg-forest rounded-full blur-3xl"></div>
+
+		<!-- Transparent Splash Bowl and Bottles Composition -->
+		<div class="relative w-full max-w-[480px] lg:max-w-[550px] aspect-square flex items-end justify-center pb-6 sm:pb-12 select-none z-10">
+			<!-- Splash Bowl Background (using transparency-processed image) -->
+			<div class="absolute inset-0 w-full h-full flex items-center justify-center">
+				<Image 
+					src={oilSplashRight} 
+					alt="Splash de Aceite" 
+					class="w-full h-[90%] object-contain drop-shadow-[0_15px_30px_rgba(201,154,46,0.18)] animate-pulse-slow"
+					loading="lazy"
+				/>
+			</div>
+
+			<!-- Overlapping product bottles arranged in a 3D float-like effect -->
+			<div class="relative z-10 flex items-end justify-center -space-x-6 sm:-space-x-10 pb-4 sm:pb-8 select-none">
+				<!-- 900ml Bottle -->
+				<div class="bottle-wrapper transform -rotate-3 hover:scale-108 hover:-translate-y-4 hover:rotate-0 transition-all duration-300 origin-bottom select-none">
+					<Image 
+						src={bottle900} 
+						alt="Muccino 900ml" 
+						class="h-32 sm:h-44 md:h-48 w-auto object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.15)]"
+						loading="lazy"
+					/>
+				</div>
+
+				<!-- 1.5L Bottle -->
+				<div class="bottle-wrapper transform -rotate-1 hover:scale-108 hover:-translate-y-4 hover:rotate-0 transition-all duration-300 origin-bottom z-10 select-none">
+					<Image 
+						src={bottle1_5} 
+						alt="Muccino 1.5L" 
+						class="h-36 sm:h-48 md:h-52 w-auto object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.15)]"
+						loading="lazy"
+					/>
+				</div>
+
+				<!-- 2L Bottle -->
+				<div class="bottle-wrapper transform rotate-1 hover:scale-108 hover:-translate-y-4 hover:rotate-0 transition-all duration-300 origin-bottom z-20 select-none">
+					<Image 
+						src={bottle2} 
+						alt="Muccino 2L" 
+						class="h-40 sm:h-52 md:h-56 w-auto object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.2)]"
+						loading="lazy"
+					/>
+				</div>
+
+				<!-- 5L Bottle -->
+				<div class="bottle-wrapper transform rotate-3 hover:scale-108 hover:-translate-y-4 hover:rotate-0 transition-all duration-300 origin-bottom z-10 select-none">
+					<Image 
+						src={bottle5} 
+						alt="Muccino 5L" 
+						class="h-44 sm:h-56 md:h-60 w-auto object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.2)]"
+						loading="lazy"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>
+
+<!-- Segment Grid Cards (Detail Section) -->
+<section class="mx-auto max-w-6xl px-4 py-16 sm:py-24">
+	<div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
+		<span class="text-xs font-semibold uppercase tracking-wider text-terracotta">Formatos a tu Medida</span>
+		<h2 class="font-serif text-3xl font-bold tracking-tight text-charcoal sm:text-4xl">
+			Soluciones para Cada Necesidad
+		</h2>
+		<p class="text-sm sm:text-base text-charcoal-muted">
+			Ofrecemos una variedad de presentaciones diseñadas específicamente para optimizar el consumo, el rendimiento y la economía de nuestros clientes.
+		</p>
+	</div>
+
+	<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 		{
 			[
-				[
-					'Hogar',
-					['Tamaños prácticos', 'Uso diario', 'Buena relación volumen/consumo'],
-				],
-				[
-					'Despensas / minimarkets',
-					[
-						'Rotación constante',
-						'Variedad de tamaños',
-						'Atención para pedidos',
-					],
-				],
-				[
-					'Gastronomía',
-					['Mayor volumen', 'Compra recurrente', 'Consultas rápidas'],
-				],
-			].map(([t, bullets]) => (
-				<div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
-					<div class="font-semibold">{t}</div>
-					<ul class="mt-3 text-sm text-zinc-300 space-y-1">
-						{bullets.map((b) => (
-							<li class="flex gap-2">
-								<span class="text-emerald-400">•</span>
-								<span>{b}</span>
-							</li>
-						))}
-					</ul>
+				{
+					title: 'Hogar y Familia',
+					description: 'Formatos prácticos, seguros y económicos ideales para el día a día en la cocina familiar.',
+					bullets: ['Fácil manejo y guardado', 'Envases prácticos de 250ml a 2L', 'Gran economía familiar'],
+					badge: 'Consumo Diario',
+					color: 'border-border-warm hover:border-mustard hover:shadow-mustard/5'
+				},
+				{
+					title: 'Comercios y Despensas',
+					description: 'Productos de alta rotación con empaque prolijo y sellado hermético para góndolas.',
+					bullets: ['Excelente margen comercial', 'Destaque visual en estantería', 'Presentaciones muy demandadas'],
+					badge: 'Alta Rotación',
+					color: 'border-border-warm hover:border-forest hover:shadow-forest/5'
+				},
+				{
+					title: 'Gastronomía e Industrias',
+					description: 'Bidones y formatos de mayor volumen pensados para el uso intensivo y profesional.',
+					bullets: ['Máximo rendimiento por litro', 'Envases robustos y seguros', 'Ideal para comedores y restaurantes'],
+					badge: 'Uso Intensivo',
+					color: 'border-border-warm hover:border-terracotta hover:shadow-terracotta/5'
+				}
+			].map((item) => (
+				<div class={`group relative rounded-3xl border ${item.color} bg-cream-dark/25 p-6 backdrop-blur-sm transition-all duration-300 hover:bg-cream-light hover:-translate-y-1 hover:shadow-lg`}>
+					<div class="flex justify-between items-start gap-4">
+						<span class="inline-flex rounded-lg bg-forest/10 px-2.5 py-0.5 text-xs font-semibold text-forest">
+							{item.badge}
+						</span>
+					</div>
+					
+					<h3 class="font-serif mt-4 text-xl font-bold text-charcoal group-hover:text-forest transition-colors">
+						{item.title}
+					</h3>
+					
+					<p class="mt-2.5 text-sm text-charcoal-muted leading-relaxed">
+						{item.description}
+					</p>
+
+					<div class="mt-6 border-t border-border-warm/65 pt-4">
+						<ul class="space-y-2 text-sm text-charcoal">
+							{item.bullets.map((b) => (
+								<li class="flex items-center gap-2">
+									<svg class="h-4.5 w-4.5 text-mustard shrink-0" viewBox="0 0 20 20" fill="currentColor">
+										<path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"/>
+									</svg>
+									<span class="text-xs sm:text-sm">{b}</span>
+								</li>
+							))}
+						</ul>
+					</div>
 				</div>
 			))
 		}
 	</div>
 </section>
+
+<style>
+	/* Slow pulse animation for background splash */
+	@keyframes pulse-slow {
+		0%, 100% {
+			transform: scale(1);
+			opacity: 1;
+		}
+		50% {
+			transform: scale(1.03);
+			opacity: 0.96;
+		}
+	}
+
+	.animate-pulse-slow {
+		animation: pulse-slow 8s ease-in-out infinite;
+	}
+
+	/* Smooth bounce/lift for bottle hover */
+	.bottle-wrapper {
+		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+</style>

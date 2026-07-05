@@ -1,0 +1,438 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsappFloat from '../../components/WhatsappFloat.astro';
+import { recipes } from '../../data/recipes';
+import { siteInfo } from '../../data/siteInfo';
+import { Image } from 'astro:assets';
+
+export async function getStaticPaths() {
+	return recipes.map((r) => ({ params: { slug: r.slug } }));
+}
+
+const { slug } = Astro.params;
+const recipe = recipes.find((r) => r.slug === slug);
+
+if (!recipe) {
+	throw new Error(`Receta no encontrada: ${slug}`);
+}
+
+const pageTitle = `${recipe.title} | Recetario Muccino`;
+const pageDesc = recipe.description;
+
+// Filter other recipes for the related section
+const relatedRecipes = recipes.filter((r) => r.slug !== slug).slice(0, 3);
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+	<Header />
+	
+	<main class="py-8 min-h-screen">
+		<!-- Breadcrumb -->
+		<div class="mx-auto max-w-6xl px-4 text-xs sm:text-sm text-charcoal-muted mb-6">
+			<nav class="flex gap-2 items-center">
+				<a class="hover:text-forest transition" href="/">Inicio</a>
+				<span>/</span>
+				<a class="hover:text-forest transition" href="/recetas">Recetas</a>
+				<span>/</span>
+				<span class="text-charcoal font-medium">{recipe.title}</span>
+			</nav>
+		</div>
+
+		<section class="mx-auto max-w-6xl px-4">
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+				
+				<!-- Left Column: Media, Info Badges & Related -->
+				<div class="lg:col-span-1 space-y-6">
+					<!-- Main Image Container -->
+					<div class="bg-cream-dark/30 rounded-3xl border border-border-warm overflow-hidden p-3 shadow-md shadow-charcoal/5">
+						<div class="relative rounded-2xl overflow-hidden aspect-[4/3] bg-cream-dark/50">
+							<Image
+								src={recipe.image}
+								alt={recipe.title}
+								class="w-full h-full object-cover"
+								widths={[320, 640]}
+								sizes="(max-width: 1024px) 100vw, 320px"
+								loading="eager"
+							/>
+							<span class="absolute top-4 left-4 bg-forest text-cream text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+								{recipe.category}
+							</span>
+						</div>
+						
+						<!-- Quick Info Badges Grid -->
+						<div class="grid grid-cols-3 gap-2 mt-4 pt-2 text-center">
+							<div class="bg-cream-light border border-border-warm rounded-2xl p-2.5">
+								<span class="text-[10px] text-charcoal-muted uppercase font-bold tracking-wider block">Prep.</span>
+								<span class="text-xs sm:text-sm font-bold text-forest mt-1 block">{recipe.prepTime}</span>
+							</div>
+							<div class="bg-cream-light border border-border-warm rounded-2xl p-2.5">
+								<span class="text-[10px] text-charcoal-muted uppercase font-bold tracking-wider block">Dificultad</span>
+								<span class="text-xs sm:text-sm font-bold text-terracotta mt-1 block">{recipe.difficulty}</span>
+							</div>
+							<div class="bg-cream-light border border-border-warm rounded-2xl p-2.5">
+								<span class="text-[10px] text-charcoal-muted uppercase font-bold tracking-wider block">Porciones</span>
+								<span class="text-xs sm:text-sm font-bold text-mustard mt-1 block">{recipe.servings}</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Ingredient Callout Card -->
+					<div class="bg-forest rounded-3xl p-6 text-cream text-sm shadow-md space-y-3 relative overflow-hidden">
+						<div class="absolute -right-10 -bottom-10 opacity-10">
+							<svg class="w-40 h-40 fill-current" viewBox="0 0 24 24">
+								<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.25z" />
+							</svg>
+						</div>
+						<div class="font-script text-2xl text-mustard">Recomendación Muccino</div>
+						<h4 class="font-serif font-bold text-base leading-tight">¿Por qué usar Aceite Muccino en esta receta?</h4>
+						<p class="text-xs text-cream/90 leading-relaxed">
+							Nuestro aceite de soja de alta calidad y fraccionamiento controlado posee un sabor neutro y un alto punto de humo, lo que permite que resalten los sabores tradicionales paraguayos sin alterar el gusto y logrando frituras secas y dorados perfectos.
+						</p>
+					</div>
+
+					<!-- Related Recipes (Desktop Only) -->
+					<div class="hidden lg:block space-y-4">
+						<h4 class="font-serif font-bold text-lg text-charcoal border-b border-border-warm pb-2">Otras Recetas Ricas</h4>
+						<div class="space-y-3">
+							{relatedRecipes.map((r) => (
+								<a href={`/recetas/${r.slug}`} class="flex items-center gap-3 bg-cream-dark/20 p-2.5 rounded-2xl border border-border-warm hover:bg-cream-dark/40 transition group">
+									<Image
+										src={r.image}
+										alt={r.title}
+										class="w-14 h-14 object-cover rounded-xl bg-cream-dark/50"
+										width={56}
+										height={56}
+									/>
+									<div class="flex-grow min-w-0">
+										<div class="text-[10px] text-terracotta font-semibold uppercase">{r.category}</div>
+										<h5 class="font-serif text-sm font-bold text-charcoal truncate group-hover:text-forest transition-colors">{r.title}</h5>
+									</div>
+								</a>
+							))}
+						</div>
+					</div>
+				</div>
+
+				<!-- Right Column: Title, Description, Ingredients & Steps -->
+				<div class="lg:col-span-2 space-y-8">
+					<!-- Title and Intro -->
+					<div class="space-y-3">
+						<div class="text-xs text-terracotta font-bold uppercase tracking-wider">{recipe.category} · Receta Especial</div>
+						<h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal leading-tight">
+							{recipe.title}
+						</h1>
+						<p class="text-base text-charcoal-muted leading-relaxed">
+							{recipe.description}
+						</p>
+					</div>
+
+					<!-- Ingredients Card with checkboxes -->
+					<div class="bg-cream-light border border-border-warm rounded-3xl p-6 sm:p-8 shadow-sm">
+						<h3 class="font-serif text-xl font-bold text-charcoal border-b border-border-warm pb-3 flex items-center justify-between">
+							<span>Ingredientes necesarios</span>
+							<span class="text-xs font-sans text-charcoal-muted font-normal">Tachá los que ya tenés</span>
+						</h3>
+						
+						<div class="mt-6 space-y-6">
+							{recipe.ingredients.map((group) => (
+								<div>
+									{group.section && (
+										<h4 class="text-xs font-bold uppercase tracking-wider text-forest mb-3">
+											{group.section}
+										</h4>
+									)}
+									<ul class="space-y-3">
+										{group.items.map((ing) => (
+											<li class="flex items-start gap-3 text-sm">
+												<label class="flex items-start gap-3 cursor-pointer select-none group w-full">
+													<input
+														type="checkbox"
+														class="ingredient-checkbox mt-1 h-4 w-4 rounded border-border-warm text-forest focus:ring-forest/30 cursor-pointer"
+													/>
+													<span class="ingredient-text text-charcoal group-hover:text-forest transition-colors leading-tight">
+														{ing}
+													</span>
+												</label>
+											</li>
+										))}
+									</ul>
+								</div>
+							))}
+						</div>
+					</div>
+
+					<!-- Preparation Steps -->
+					<div class="space-y-6">
+						<h3 class="font-serif text-xl font-bold text-charcoal border-b border-border-warm pb-3">
+							Paso a paso de la preparación
+						</h3>
+						
+						<ol class="space-y-6">
+							{recipe.instructions.map((step, idx) => (
+								<li class="flex gap-4 sm:gap-5 items-start">
+									<div class="flex-shrink-0 w-8 h-8 rounded-full bg-forest text-cream font-bold flex items-center justify-center text-sm shadow-sm">
+										{idx + 1}
+									</div>
+									<div class="flex-grow pt-1">
+										<p class="text-sm sm:text-base text-charcoal leading-relaxed">
+											{step}
+										</p>
+									</div>
+								</li>
+							))}
+						</ol>
+					</div>
+
+					<!-- Share / CTA box -->
+					<div class="border-t border-border-warm/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+						<a href="/recetas" class="text-forest hover:text-forest-light font-semibold text-sm transition flex items-center gap-2">
+							← Volver al recetario
+						</a>
+						
+						<button
+							id="btn-print"
+							type="button"
+							class="inline-flex items-center gap-1.5 rounded-xl border border-border-warm bg-cream-dark/25 px-4 py-2.5 text-xs font-semibold text-charcoal hover:bg-cream-dark transition cursor-pointer">
+							<svg class="w-4 h-4 text-charcoal-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+							</svg>
+							Imprimir Receta
+						</button>
+					</div>
+					
+					<!-- Related Recipes (Mobile Only) -->
+					<div class="lg:hidden space-y-4 pt-4 border-t border-border-warm/60">
+						<h4 class="font-serif font-bold text-lg text-charcoal">Otras Recetas Ricas</h4>
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+							{relatedRecipes.map((r) => (
+								<a href={`/recetas/${r.slug}`} class="flex items-center gap-3 bg-cream-dark/20 p-2.5 rounded-2xl border border-border-warm hover:bg-cream-dark/40 transition">
+									<Image
+										src={r.image}
+										alt={r.title}
+										class="w-12 h-12 object-cover rounded-xl bg-cream-dark/50"
+										width={48}
+										height={48}
+									/>
+									<div class="min-w-0">
+										<div class="text-[9px] text-terracotta font-semibold uppercase">{r.category}</div>
+										<h5 class="font-serif text-xs font-bold text-charcoal truncate">{r.title}</h5>
+									</div>
+								</a>
+							))}
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+	</main>
+
+	<!-- Print-Only Layout -->
+	<div class="print-only-recipe">
+		<div class="print-header">
+			<div class="print-brand">MUCCINO</div>
+			<div class="print-subtitle">Recetario Tradicional</div>
+			<hr class="print-hr" />
+		</div>
+		
+		<h1 class="print-title">{recipe.title}</h1>
+		<p class="print-desc"><em>{recipe.description}</em></p>
+		
+		<div class="print-meta">
+			<span><strong>Categoría:</strong> {recipe.category}</span>
+			<span><strong>Preparación:</strong> {recipe.prepTime}</span>
+			<span><strong>Dificultad:</strong> {recipe.difficulty}</span>
+			<span><strong>Porciones:</strong> {recipe.servings}</span>
+		</div>
+		
+		<h2 class="print-section-title">Ingredientes</h2>
+		{recipe.ingredients.map((group) => (
+			<div class="print-ingredient-group">
+				{group.section && <h3 class="print-subsection-title">{group.section}</h3>}
+				<ul class="print-list">
+					{group.items.map((ing) => (
+						<li>• {ing}</li>
+					))}
+				</ul>
+			</div>
+		))}
+		
+		<h2 class="print-section-title">Preparación</h2>
+		<ol class="print-steps">
+			{recipe.instructions.map((step, idx) => (
+				<li><strong>Paso {idx + 1}:</strong> {step}</li>
+			))}
+		</ol>
+		
+		<hr class="print-hr" style="margin-top: 30px;" />
+		<div class="print-footer">
+			Receta de Muccino — www.muccino.com.py
+		</div>
+	</div>
+
+	<Footer />
+	<WhatsappFloat />
+</BaseLayout>
+
+<script>
+	// Interactive ingredients checkbox strikethrough
+	const checkboxes = document.querySelectorAll('.ingredient-checkbox');
+	checkboxes.forEach((cb) => {
+		cb.addEventListener('change', (e) => {
+			const label = cb.closest('label');
+			const text = label?.querySelector('.ingredient-text');
+			if (cb instanceof HTMLInputElement && text) {
+				if (cb.checked) {
+					text.classList.add('line-through', 'text-charcoal-muted/70');
+				} else {
+					text.classList.remove('line-through', 'text-charcoal-muted/70');
+				}
+			}
+		});
+	});
+
+	// Print recipe button
+	const printBtn = document.getElementById('btn-print');
+	if (printBtn) {
+		printBtn.addEventListener('click', () => {
+			window.print();
+		});
+	}
+</script>
+
+<style is:global>
+	/* Hide print-only element by default on screen */
+	.print-only-recipe {
+		display: none;
+	}
+
+	@media print {
+		/* Hide the screen layout elements entirely */
+		header, footer, main, .whatsapp-float, [class*="whatsapp-float"] {
+			display: none !important;
+		}
+		
+		/* Show and format print-only recipe layout */
+		.print-only-recipe {
+			display: block !important;
+			color: #000000 !important;
+			background: #ffffff !important;
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+			font-size: 10.5pt;
+			line-height: 1.5;
+			margin: 0;
+			padding: 0;
+		}
+
+		.print-header {
+			text-align: center;
+			margin-bottom: 15px;
+		}
+
+		.print-brand {
+			font-family: 'Playfair Display', 'Georgia', serif;
+			font-size: 18pt;
+			font-weight: bold;
+			letter-spacing: 1px;
+			color: #000000;
+		}
+
+		.print-subtitle {
+			font-size: 9pt;
+			color: #555555;
+			margin-top: 2px;
+			letter-spacing: 0.5px;
+		}
+
+		.print-hr {
+			border: 0;
+			border-top: 1px solid #000000;
+			margin-top: 8px;
+			margin-bottom: 15px;
+		}
+
+		.print-title {
+			font-family: 'Playfair Display', 'Georgia', serif;
+			font-size: 16pt;
+			font-weight: bold;
+			margin-top: 0;
+			margin-bottom: 6px;
+			color: #000000;
+		}
+
+		.print-desc {
+			font-size: 10pt;
+			color: #333333;
+			margin-bottom: 15px;
+			font-style: italic;
+		}
+
+		.print-meta {
+			font-size: 9pt;
+			color: #444444;
+			border-top: 1px dashed #cccccc;
+			border-bottom: 1px dashed #cccccc;
+			padding: 6px 0;
+			margin-bottom: 20px;
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
+
+		.print-section-title {
+			font-family: 'Playfair Display', 'Georgia', serif;
+			font-size: 12pt;
+			font-weight: bold;
+			margin-top: 20px;
+			margin-bottom: 8px;
+			color: #000000;
+			border-bottom: 1px solid #000000;
+			padding-bottom: 3px;
+		}
+
+		.print-subsection-title {
+			font-size: 10pt;
+			font-weight: bold;
+			margin-top: 10px;
+			margin-bottom: 4px;
+			color: #111111;
+		}
+
+		.print-list {
+			list-style-type: none;
+			padding-left: 0;
+			margin: 0 0 10px 0;
+		}
+
+		.print-list li {
+			margin-bottom: 4px;
+			padding-left: 10px;
+			text-indent: -10px;
+		}
+
+		.print-steps {
+			padding-left: 0;
+			list-style: none;
+			margin: 0;
+		}
+
+		.print-steps li {
+			margin-bottom: 10px;
+			padding-left: 0;
+		}
+
+		.print-steps li strong {
+			color: #000000;
+		}
+
+		.print-footer {
+			text-align: center;
+			font-size: 8.5pt;
+			color: #555555;
+			margin-top: 15px;
+		}
+	}
+</style>

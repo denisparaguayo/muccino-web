@@ -1,79 +1,240 @@
 ---
-import { site } from '../data/site';
-import heroImg from '../assets/img/hero-productos.jpg';
+import { siteInfo } from "../data/siteInfo";
+import heroImg from "../assets/img/hero-medio.webp";
+import { Picture } from "astro:assets";
 
-const waMinorista = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(site.waMessageMinorista)}`;
-const waMayorista = `https://wa.me/${site.phoneWa}?text=${encodeURIComponent(site.waMessageMayorista)}`;
+const waVentas = `https://wa.me/${siteInfo.contact.phoneWa}?text=${encodeURIComponent(
+  "Hola, quiero consultar por la distribución mayorista de los aceites Muccino.",
+)}`;
 ---
 
-<section id="inicio" class="relative">
-	<div class="absolute inset-0">
-		<img
-			src={heroImg.src}
-			alt="Aceites Muccino"
-			class="h-full w-full object-cover"
-		/>
-		<div
-			class="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/70 to-zinc-950/20">
-		</div>
-	</div>
+<section
+  id="inicio"
+  class="relative overflow-hidden bg-cream-light min-h-[90vh] lg:min-h-screen flex flex-col lg:flex-row items-stretch"
+>
+  <!-- Left Half: Ambient Food Image -->
+  <div
+    class="relative w-full lg:w-[70%] min-h-[35vh] lg:min-h-auto overflow-hidden"
+  >
+    <Picture
+      src={heroImg}
+      formats={['avif', 'webp']}
+      widths={[600, 1200, 1600]}
+      sizes="(max-width: 1024px) 100vw, 70vw"
+      alt="Aceites Muccino S.A."
+      class="absolute inset-0 h-full w-full object-cover object-center scale-102"
+      loading="eager"
+    />
+    <!-- Subtle fade/blur gradient to smooth the transition between the image and the text panel -->
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent/20 via-80% to-cream-light lg:bg-gradient-to-r lg:from-transparent lg:via-transparent/20 lg:via-80% lg:to-cream-light pointer-events-none"
+    >
+    </div>
 
-	<div class="relative mx-auto max-w-6xl px-4 py-16 sm:py-24">
-		<div class="max-w-xl">
-			<!-- Badge desde 2009 -->
-			<div
-				class="mb-3 inline-flex items-center gap-2 rounded-full border border-zinc-700/70 bg-zinc-950/40 px-3 py-1 text-xs text-zinc-200">
-				<span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-				<span class="font-semibold">Desde {site.since}</span>
-			</div>
+    <!-- Beautiful wave shape divider with hand-drawn brush/sketch style matching the reference -->
+    <div
+      class="absolute bottom-0 left-0 w-full z-20 pointer-events-none overflow-hidden h-14 sm:h-20 md:h-24 lg:h-28"
+    >
+      <svg
+        class="absolute bottom-0 left-0 w-full h-full"
+        viewBox="0 0 1440 120"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- Organic Solid Mask: main cream wave -->
+        <path
+          d="M-20,85 C180,115 360,55 540,55 C720,55 900,105 1080,100 C1260,95 1380,105 1460,90 L1460,130 L-20,130 Z"
+          fill="var(--color-cream-light)"></path>
 
-			<h1 class="text-3xl sm:text-4xl font-semibold tracking-tight">
-				{site.brand}
-			</h1>
+        <!-- Floating Brush Stroke 1 (Left trough area - upper stroke) -->
+        <path
+          d="M160,93 C240,96 320,80 390,70"
+          fill="none"
+          stroke="var(--color-cream-light)"
+          stroke-width="3.5"
+          stroke-linecap="round"
+          opacity="0.9"></path>
 
-			<!-- Trust line -->
-			<p class="mt-2 text-sm text-zinc-300">
-				<span class="inline-flex items-center gap-2">
-					<span class="h-1.5 w-10 rounded-full bg-emerald-500"></span>
-					<span>{site.trustLine}</span>
-				</span>
-			</p>
+        <!-- Floating Brush Stroke 2 (Left trough area - lower stroke) -->
+        <path
+          d="M210,100 C260,102 310,92 360,83"
+          fill="none"
+          stroke="var(--color-cream-light)"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          opacity="0.85"></path>
 
-			<p class="mt-4 text-zinc-300">
-				{site.tagline}
-			</p>
+        <!-- Floating Brush Stroke 3 (Center crest area - lower main curve) -->
+        <path
+          d="M560,45 C630,41 710,41 780,46"
+          fill="none"
+          stroke="var(--color-cream-light)"
+          stroke-width="3.5"
+          stroke-linecap="round"
+          opacity="0.9"></path>
 
-			<div class="mt-7 flex flex-wrap gap-3">
-				<a
-					href="#presentaciones"
-					class="rounded-xl bg-zinc-100 px-4 py-2 font-semibold text-zinc-900 hover:bg-white">
-					Ver presentaciones
-				</a>
+        <!-- Floating Brush Stroke 4 (Center crest area - upper secondary curve) -->
+        <path
+          d="M600,34 C650,30 710,30 760,35"
+          fill="none"
+          stroke="var(--color-cream-light)"
+          stroke-width="2"
+          stroke-linecap="round"
+          opacity="0.8"></path>
 
-				<!-- Catálogo (Mayorista) -->
-				<a
-					href={waMayorista}
-					target="_blank"
-					rel="noopener"
-					class="rounded-xl bg-emerald-600 px-4 py-2 font-semibold hover:bg-emerald-500">
-					Pedir catálogo (mayorista)
-				</a>
+        <!-- Floating Brush Stroke 5 (Right trough area - upper curve) -->
+        <path
+          d="M930,86 C980,91 1030,91 1080,84"
+          fill="none"
+          stroke="var(--color-cream-light)"
+          stroke-width="3"
+          stroke-linecap="round"
+          opacity="0.9"></path>
 
-				<!-- Consulta (Minorista) -->
-				<a
-					href={waMinorista}
-					target="_blank"
-					rel="noopener"
-					class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold hover:border-zinc-500">
-					Consultar (minorista)
-				</a>
-			</div>
+        <!-- Floating Brush Stroke 6 (Right trough area - lower curve) -->
+        <path
+          d="M960,93 C1000,95 1040,95 1070,90"
+          fill="none"
+          stroke="var(--color-cream-light)"
+          stroke-width="2"
+          stroke-linecap="round"
+          opacity="0.8"></path>
 
-			<div class="mt-8 flex items-center gap-2 text-xs text-zinc-400">
-				<span class="h-1.5 w-10 rounded-full bg-emerald-500"></span>
-				<span class="h-1.5 w-10 rounded-full bg-white/70"></span>
-				<span class="h-1.5 w-10 rounded-full bg-red-500"></span>
-			</div>
-		</div>
-	</div>
+        <!-- Floating Brush Stroke 7 (Far right crest area) -->
+        <path
+          d="M1160,78 C1210,72 1270,72 1320,77"
+          fill="none"
+          stroke="var(--color-cream-light)"
+          stroke-width="3.5"
+          stroke-linecap="round"
+          opacity="0.9"></path>
+
+        <!-- Floating Brush Stroke 8 (Far right secondary accent) -->
+        <path
+          d="M1210,65 C1250,63 1280,65 1310,68"
+          fill="none"
+          stroke="var(--color-cream-light)"
+          stroke-width="2"
+          stroke-linecap="round"
+          opacity="0.8"></path>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Right Half: Copywriting and CTAs -->
+  <div
+    class="w-full lg:w-[30%] bg-cream-light flex items-center py-12 px-6 sm:py-20 sm:px-8 lg:pl-10 lg:pr-8 relative"
+  >
+    <!-- Subtle background decoration element for organic feel -->
+    <div
+      class="absolute top-0 right-0 w-44 h-44 opacity-25 pointer-events-none select-none translate-x-12 -translate-y-12 bg-border-warm rounded-full blur-3xl"
+    >
+    </div>
+
+    <div class="max-w-xl space-y-6 relative z-10">
+      <!-- Handwritten Script subtitle and badge -->
+      <div class="space-y-3">
+        <span class="font-script text-3xl lg:text-4xl text-forest block">
+          El sabor de la cocina tradicional
+        </span>
+
+        <div
+          class="inline-flex items-center gap-2 rounded-full border border-border-warm bg-cream-dark/50 px-3.5 py-1 text-xs text-charcoal shadow-sm"
+        >
+          <span class="h-2 w-2 rounded-full bg-forest animate-pulse"></span>
+          <span class="font-bold">Desde 2009</span>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <h1
+        class="font-serif text-4xl sm:text-5xl lg:text-5xl font-bold tracking-tight text-charcoal leading-tight"
+      >
+        Aceite Muccino <br class="hidden sm:inline" />
+        <span class="text-forest">Calidad y Rendimiento</span>
+        <br />
+        en tu Hogar
+      </h1>
+
+      <!-- Subtitle -->
+      <p
+        class="text-sm sm:text-base text-charcoal-muted leading-relaxed max-w-lg"
+      >
+        Elaborado con procesos de alta calidad y fraccionamiento controlado para
+        garantizar la máxima pureza. El ingrediente ideal para lograr frituras
+        secas y dorados perfectos en la cocina de las familias y negocios
+        paraguayos.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap gap-3 pt-2">
+        <a
+          href="/recetas"
+          class="inline-flex items-center justify-center rounded-xl bg-terracotta px-6 py-3.5 text-sm font-bold text-cream hover:bg-terracotta-light hover:scale-[1.02] active:scale-[0.98] transition shadow-md shadow-terracotta/20 cursor-pointer"
+        >
+          Ver Recetario
+        </a>
+
+        <a
+          href="/productos"
+          class="inline-flex items-center justify-center rounded-xl bg-forest px-6 py-3.5 text-sm font-bold text-cream hover:bg-forest-light hover:scale-[1.02] active:scale-[0.98] transition shadow-md shadow-forest/20 cursor-pointer"
+        >
+          Nuestros Productos
+        </a>
+
+        <a
+          href={waVentas}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center rounded-xl border border-border-warm bg-cream px-6 py-3.5 text-sm font-bold text-charcoal hover:bg-cream-dark/35 hover:scale-[1.02] active:scale-[0.98] transition shadow-sm cursor-pointer"
+        >
+          Contactar Ventas
+        </a>
+      </div>
+
+      <!-- Bottom labels -->
+      <div
+        class="border-t border-border-warm/60 pt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-charcoal-muted"
+      >
+        <span class="flex items-center gap-1.5">
+          <svg
+            class="w-3.5 h-3.5 text-forest"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+            ></path>
+          </svg>
+          Planta en Villa Elisa
+        </span>
+        <span class="text-border-warm/80">|</span>
+        <span class="flex items-center gap-1.5">
+          <svg
+            class="w-3.5 h-3.5 text-forest"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 01.293.707V15a1 1 0 01-1 1h-2"
+            ></path>
+          </svg>
+          Distribución en todo el país
+        </span>
+      </div>
+    </div>
+  </div>
 </section>

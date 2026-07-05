@@ -1,7 +1,7 @@
 ---
 import { site } from "../data/site";
 import { presentaciones } from "../data/presentaciones";
-import logoM from "../assets/img/logo-m.jpg"; // o .png
+import logoM from "../assets/img/logos/letra-m.svg";
 
 type ImgLike = string | { src: string };
 
@@ -30,7 +30,8 @@ const wa = (size: string) =>
     <div
       class="text-amber-400 flex items-center pb-2 pr-2 border-b-2 border-amber-400 uppercase"
     >
-      <img src={logoM.src} alt="Muccino" class="h-6 w-6 mr-3 rounded" />
+      <img src={logoM.src} alt="Muccino" class="h-6 w-6 mr-3 rounded bg-zinc-900/50 p-1 border border-zinc-800" />
+
       <a href="#presentaciones" class="font-semibold inline-block">
         Presentaciones
       </a>

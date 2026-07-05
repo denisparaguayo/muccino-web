@@ -4,14 +4,23 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsappFloat from '../components/WhatsappFloat.astro';
 import NosotrosPage from '../components/NosotrosPage.astro';
-import { site } from '../data/site';
+import { siteInfo } from '../data/siteInfo';
 ---
 
 <BaseLayout
-	title={`Nosotros | ${site.brand}`}
-	description={`Conocé ${site.brand}. ${site.trustLine}. Desde ${site.since}.`}>
+	title={`Nosotros | ${siteInfo.name}`}
+	description={`${siteInfo.description} Planta de fraccionamiento en Villa Elisa, Paraguay.`}>
 	<Header />
-	<main>
+	<main class="py-8">
+		<!-- Breadcrumb -->
+		<div class="mx-auto max-w-6xl px-4 text-xs sm:text-sm text-charcoal-muted mb-4">
+			<nav class="flex gap-2 items-center">
+				<a class="hover:text-forest transition" href="/">Inicio</a>
+				<span>/</span>
+				<span class="text-charcoal font-medium">Nosotros</span>
+			</nav>
+		</div>
+		
 		<NosotrosPage />
 	</main>
 	<Footer />
