@@ -19,11 +19,12 @@ const waVentas = `https://wa.me/${siteInfo.contact.phoneWa}?text=${encodeURIComp
     <Picture
       src={heroImg}
       formats={['avif', 'webp']}
-      widths={[600, 1200, 1600]}
+      widths={[400, 800, 1200, 1600]}
       sizes="(max-width: 1024px) 100vw, 70vw"
       alt="Aceites Muccino S.A."
       class="absolute inset-0 h-full w-full object-cover object-center scale-102"
       loading="eager"
+      fetchpriority="high"
     />
     <!-- Subtle fade/blur gradient to smooth the transition between the image and the text panel -->
     <div
